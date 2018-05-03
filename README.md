@@ -8,8 +8,7 @@ and error code responses via the query string.
 > breaking changes.
 
 # Installation
-1. Clone the repository and copy the directory `.mitmproxy` to your home 
-directory.
+1. Clone the repository
 
 ```sh
 $> git clone git@github.com:jkereako/mitmproxy-config.git
@@ -18,7 +17,11 @@ remote: Counting objects: 5, done.
 remote: Compressing objects: 100% (5/5), done.
 Receiving objects: 100% (5/5), done.
 remote: Total 5 (delta 0), reused 0 (delta 0), pack-reused 0
+```
 
+Then copy the directory `.mitmproxy` to your home directory.
+
+```sh
 $> cp -R mitmproxy-config/.mitmproxy ~/
 ```
 

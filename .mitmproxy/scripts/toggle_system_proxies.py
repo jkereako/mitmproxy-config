@@ -130,7 +130,6 @@ class Helper(object):
     Internal helper methods.
     '''
     def execute(self, arg_list):
-        print(arg_list)
         # Use this line instead to see the actual reported error
         # result = subprocess.run(arg_list, stdout=subprocess.PIPE).stdout
         result = subprocess.check_output(arg_list)

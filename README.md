@@ -62,6 +62,9 @@ Here are the supported query string parameters and the type of their arguments:
 | Error code      | `e`  |  String   |
 | Response delay  | `d`  |  Integer  |
 
+# Known Issues
+The script toggle_system_proxies doesn't work while on a VPN.
+
 # mitmproxy script debugging
 To debug a custom script in mitmproxy, use mitmdump.
 

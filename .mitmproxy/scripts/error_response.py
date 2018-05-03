@@ -20,7 +20,7 @@ class ErrorResponse(object):
             arg  = query_pair[1]
 
             # Error Code
-            elif param == 'code' or param == 'c':
+            if param == 'code' or param == 'c':
                 self.error_code = str(arg)
 
             # Checks for a value in the parameter, attempts to cast it to an int and,
@@ -28,7 +28,7 @@ class ErrorResponse(object):
             # values.
             
             # Response Delay
-            if param == 'delay' or param == 'd':
+            elif param == 'delay' or param == 'd':
                 try:
                     self.response_delay = int(arg)
                 except ValueError:

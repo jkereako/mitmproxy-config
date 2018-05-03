@@ -20,7 +20,7 @@ class NetworkDeviceInspector(object):
         '''
 
         # This is the simplest way to determine the active network device.
-        args = ["route", "get", "draftkings.com"]
+        args = ["route", "get", "google.com"]
         lines = Helper().execute(args)
         substring = "interface"
 

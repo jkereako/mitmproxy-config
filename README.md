@@ -28,8 +28,8 @@ $> cp -R mitmproxy-config/.mitmproxy ~/
 $> mitmproxy
 ```
 
-    > *The following setps install mitmproxy's root certificate. This 
-    > allows mitmproxy to decrypt encrypted traffic.*
+> *The following setps install mitmproxy's root certificate. This 
+> allows mitmproxy to decrypt encrypted traffic.*
 
 3. Navigate to http://mitm.it in your browser and select Apple.
 4. Follow the instructions for how to install the certificate.

@@ -1,0 +1,5 @@
+scripts: [~/.mitmproxy/scripts/toggle_macos_proxies.py, ~/.mitmproxy/scripts/error_response.py]
+view_filter: "~dst amazon.com|google.com"
+console_mouse: false
+console_palette: dark
+console_eventlog_verbosity: error

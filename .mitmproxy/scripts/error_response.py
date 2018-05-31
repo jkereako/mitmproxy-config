@@ -28,14 +28,14 @@ class ErrorResponse(object):
             # values.
             
             # Response Delay
-            elif param == 'delay' or param == 'd':
+            elif param == 'delay':
                 try:
                     self.response_delay = int(arg)
                 except ValueError:
                     self.response_delay = 0
 
             # Status Code
-            elif param == 'status' or param == 's':
+            elif param == 'status':
                 try:
                     self.status_code = int(arg)
                 except ValueError:
@@ -50,7 +50,7 @@ class ErrorResponse(object):
         flow.response.status_code = self.status_code
 
     def response(self, flow):
-        # Delay the response by the specified amount of time
+        # Delay the response by the specified number of seconds
         if self.response_delay > 0:
             time.sleep(self.response_delay)
             # Reset `response_delay` to 0 to prevent every request from having 

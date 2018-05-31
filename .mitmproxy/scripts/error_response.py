@@ -20,7 +20,7 @@ class ErrorResponse(object):
             arg  = query_pair[1]
 
             # Error Code
-            if param == 'code' or param == 'c':
+            if param == 'code':
                 self.error_code = str(arg)
 
             # Checks for a value in the parameter, attempts to cast it to an int and,

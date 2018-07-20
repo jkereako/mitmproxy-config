@@ -20,6 +20,15 @@ class ErrorResponse(object):
             arg  = query_pair[1]
 
             # Error Code
+            if param == 'clear_cookies':
+                try:
+                     if int(arg) == 1:
+                        flow.request.cookies = None
+                except ValueError:
+                    # Do not clear the cookies if we can't parse the argument
+                    pass
+
+            # Error Code
             if param == 'code':
                 self.error_code = str(arg)
 

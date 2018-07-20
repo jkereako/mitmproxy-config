@@ -59,11 +59,12 @@ For example, this URL will return an HTTP error code of 422: `http://ytmnd.com?s
 
 Here are the supported query string parameters and the type of their arguments:
 
-|                 |  Parameter  |  Type     |
-|-----------------|-------------|-----------|
-| Status code     | `status`    |  Integer  |
-| Error code      | `code`      |  String   |
-| Response delay  | `delay`     |  Integer  |
+|                 |  Parameter         |   Type    |
+|-----------------|--------------------|-----------|
+| Clear cookies   | `clear_cookies`    |  Boolean  |
+| Status code     | `status`           |  Integer  |
+| Error code      | `code`             |  String   |
+| Response delay  | `delay`            |  Integer  |
 
 # Known Issues
 The script toggle_system_proxies doesn't work while on a VPN.

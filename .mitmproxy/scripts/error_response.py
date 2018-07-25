@@ -12,6 +12,13 @@ class ErrorResponse(object):
         self.error_code = ''
         self.error_response = {'errorStatus': {'code': '', 'message': 'Stubbed response from MITM Proxy'}}
 
+    def requestheaders(self, flow):
+        # Reset state before each request
+        self.response_delay = 0
+        self.status_code = 0
+        self.error_code = ''
+        self.error_response = {'errorStatus': {'code': '', 'message': 'Stubbed response from MITM Proxy'}}
+
     def request(self, flow):
         query_pairs = self.parse_query_string(flow)
 
@@ -22,7 +29,7 @@ class ErrorResponse(object):
             # Clear Cookies
             if param == 'clear_cookies':
                 try:
-                     if int(arg) == 1:
+                    if int(arg) == 1:
                         flow.request.cookies = []
                 except ValueError:
                     # Do not clear the cookies if we can't parse the argument
@@ -41,14 +48,14 @@ class ErrorResponse(object):
                 try:
                     self.response_delay = int(arg)
                 except ValueError:
-                    self.response_delay = 0
+                    pass
 
             # Status Code
             elif param == 'status':
                 try:
                     self.status_code = int(arg)
                 except ValueError:
-                     self.status_code = 0
+                    pass
 
     def responseheaders(self, flow):
         flow.response.headers["X-Proxy"] = "Intercepted by MITM Proxy"

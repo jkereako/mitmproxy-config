@@ -65,9 +65,6 @@ class ErrorResponse(object):
         # Delay the response by the specified number of seconds
         if self.response_delay > 0:
             time.sleep(self.response_delay)
-            # Reset `response_delay` to 0 to prevent every request from having 
-            # a response delay.
-            self.response_delay = 0
 
         if self.error_code == '':
             return

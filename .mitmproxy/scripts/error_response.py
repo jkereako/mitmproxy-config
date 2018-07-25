@@ -38,10 +38,6 @@ class ErrorResponse(object):
             # Error Code
             if param == 'code':
                 self.error_code = str(arg)
-
-            # Checks for a value in the parameter, attempts to cast it to an int and,
-            # if the cast fails, then reset the instance properties to their default
-            # values.
             
             # Response Delay
             elif param == 'delay':

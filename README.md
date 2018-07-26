@@ -61,6 +61,7 @@ Here are the supported query string parameters and the type of their arguments:
 
 |                 |  Parameter         |   Type    |
 |-----------------|--------------------|-----------|
+| URL redirect    | `redirect`         |  URL      |
 | Clear cookies   | `clear_cookies`    |  Boolean  |
 | Status code     | `status`           |  Integer  |
 | Error code      | `code`             |  String   |

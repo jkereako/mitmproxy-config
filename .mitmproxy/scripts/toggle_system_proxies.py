@@ -2,53 +2,45 @@ import subprocess
 
 class NetworkDeviceInspector(object):
     '''
-    Inspects network devices in macOS
+    Inspects network devices in macOS.
     '''
     def active_device_name(self):
         '''
         Finds the active device name, e.g. "Wi-Fi", "Thunderbolt Ethernet"
         '''
-        active_device = self.__find_active_device_identifier()
+        return self.__find_active_device_name()
 
-        assert active_device is not None, "Unable to detect the active network device"
-
-        return self.__find_active_device_name(active_device)
-
-    def __find_active_device_identifier(self):
-        '''
-        Finds the active network device identifier (e.g. "en0" or "en1")
-        '''
-
-        # This is the simplest way to determine the active network device.
-        args = ["route", "get", "google.com"]
-        lines = Helper().execute(args)
-        substring = "interface"
-
-        for line in lines:
-            string = str(line)
-            if substring in string:
-                # output: b'  interface: en0'
-                #
-                # Splits the string on the colon to remove the first half, index
-                # the last element and then remove unwanted string
-                return string.split(":")[-1].strip("\"' ")
-
-    def __find_active_device_name(self, active_device):
+    def __find_active_device_name(self):
         '''
         Finds the network service name for a given device identifier
         '''
         args = ["networksetup", "-listnetworkserviceorder"]
         lines = Helper().execute(args)
+        expected_length = 3
 
+        # The output of `networksetup -listnetworkserviceorder` is the following:
+        #
+        # > An asterisk (*) denotes that a network service is disabled.
+        # > (1) Wi-Fi
+        # > (Hardware Port: Wi-Fi, Device: en0)
+        # > 
+        # > (2) Thunderbolt Bridge
+        # > (Hardware Port: Thunderbolt Bridge, Device: bridge0)
+        #
+        # We want line #3. It's currently used network device.
+        if len(lines) < expected_length:
+            assert False, "Unable find active network device name"
+
+        # Find the first line that contains the device identifier. This 
+        # solution allows us to avoid direct indexing.
         for line in lines:
-            string = str(line)
-            if active_device in string:
-                # output: b'(Hardware Port: Wi-Fi, Device: en0)'
-                name = string.split(",")[0].split(":")[-1].strip("\"' ")
-                return name
+            string = str(line).strip()
 
-        # Unexpected behavior
-        assert False, "Unable find active network device name"
+            if "(Hardware Port:" in string:
+                name = string.split(",")[0].split(":")[-1].strip("\"' ")
+                break
+
+        return name
 
 class ProxyManager(object):
     '''
@@ -65,24 +57,19 @@ class ProxyManager(object):
         'self.device_name'.
         '''
         helper = Helper()
-        get_web_proxy_args = ["-getwebproxy", "-getsecurewebproxy"]
+        args = ["-getwebproxy", "-getsecurewebproxy"]
 
-        for get_web_proxy_arg in get_web_proxy_args:
-            args = ["networksetup", get_web_proxy_arg, self.device_name]
-            lines = helper.execute(args)
+        for arg in args:
+            cmd = ["networksetup", arg, self.device_name]
+            lines = helper.execute(cmd)
 
             for line in lines:
-                split_line = line.strip("\"' ").split(":")
+                split_line = line.split(":")
 
-                if split_line[0] == "Server":
-                    if split_line[-1] != self.server:
-                        return False
+                if split_line[0].strip() == "Enabled" and split_line[-1].strip() == "Yes":
+                    return True
 
-                elif split_line[0] == "Port":
-                    if split_line[-1] != self.port:
-                        return False
-
-            return True
+            return False
 
     def set_proxies(self):
         '''
@@ -94,6 +81,7 @@ class ProxyManager(object):
 
         for set_web_proxy_arg in set_web_proxy_args:
             args = ["networksetup", set_web_proxy_arg, self.device_name, "localhost", "8080"]
+
             helper.execute(args)
 
     def deactivate_proxies(self):

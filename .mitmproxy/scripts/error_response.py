@@ -10,7 +10,7 @@ class ErrorResponse(object):
         self.response_delay = 0
         self.status_code = 0
         self.error_code = ''
-        self.error_response = {'errorStatus': {'code': '', 'message': 'Stubbed response from MITM Proxy'}}
+        self.error_response = {}
 
     def requestheaders(self, flow):
         # Reset state before each request
@@ -25,6 +25,10 @@ class ErrorResponse(object):
         for query_pair in query_pairs:
             param = query_pair[0]
             arg  = query_pair[1]
+
+            # URL Redirect
+            if param == 'redirect':
+                flow.request.url = arg
 
             # Clear Cookies
             if param == 'clear_cookies':

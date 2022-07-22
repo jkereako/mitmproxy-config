@@ -4,8 +4,7 @@ active network device and automatically deactivates the proxies when you kill
 mitmproxy. Additionally, it allows you to test network timeouts and status code
 and error code responses via the query string.
 
-> **Only works with version 3.0 and later!** The 3.0 release had quite a few
-> breaking changes.
+> Tested on macOS Monterey (12.4) and mitmproxy 8.0
 
 # Installation
 1. Clone the repository
@@ -67,8 +66,17 @@ Here are the supported query string parameters and the type of their arguments:
 | Error code      | `code`             |  String   |
 | Response delay  | `delay`            |  Integer  |
 
-# Known Issues
-The script toggle_system_proxies doesn't work while on a VPN.
+# Troubleshooting
+
+### Problems with VPN
+Proxies won't work over a VPN, but, there are work-arounds. The folks at
+[Proxyman have a doc for said work-arounds][1].
+
+### Proxies not automatically set
+For the first time only, you may need to manually toggle the proxies. Go to 
+**System Preferences > Network > Advanced > Proxies**. Select "Web Proxy 
+(HTTP)" and "Secure Web Proxy (HTTPS)", click **OK** and then
+click **Apply**. Now turn them off and try running mitmproxy again.
 
 # mitmproxy script debugging
 To debug a custom script in mitmproxy, use mitmdump.
@@ -79,3 +87,5 @@ To debug a custom script in mitmproxy, use mitmdump.
 
 This runs mitmproxy directly in the command line which allows you to see errors
 printed to stderr and logs printed to stdout.
+
+[1]: https://docs.proxyman.io/troubleshooting/proxyman-does-not-work-with-vpn-apps
